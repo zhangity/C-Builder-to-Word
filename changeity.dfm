@@ -23,8 +23,6 @@
     Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = []
-    Lines.Strings = (
-      'cc')
     ParentFont = False
     TabOrder = 0
   end

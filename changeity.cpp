@@ -18,7 +18,8 @@ void __fastcall TForm2::转换Click(TObject *Sender)
 {
 		String stext = cc->Text.Trim().c_str();
 	   char str[5000] = "";
-	   strcpy(str,AnsiString(stext.c_str()).c_str());
+//	   strcpy(str,AnsiString(stext.c_str()).c_str());
+		strcpy(str,stext.t_str());
 	   char split[] = "\n";
 	   char * p = strtok (str,split);
 
@@ -29,12 +30,15 @@ void __fastcall TForm2::转换Click(TObject *Sender)
 		   String ssss = p;
 		   if (ssss.IsEmpty() == false) {
 			  AnsiString sstext =  AnsiString(p);
+
 			  TReplaceFlags rf;
 			  rf << rfReplaceAll;
 			  AnsiString Result = StringReplace(sstext,"\r","",rf);
-			  Result = StringReplace(Result,".","",rf);
-			  Result = Result.SubString(3,Result.Length());
 
+			  Result = StringReplace(Result,".","",rf);
+//			  ShowMessage(Result);
+//			  Result = Result.SubString(3,Result.Length());
+//              ShowMessage(Result);
 //			  String pattern = " ";
 //			  regex re(pattern);
 //			  String fmt = "20%";
@@ -52,7 +56,7 @@ Variant word_select;
 Variant word_table;
 Variant my_cell;
 
-
+vWordApp = CreateOleObject("Word.Application");
 // 显示Word界面
 vWordApp.OlePropertySet("Visible", true);
 // 新建一个文档
@@ -61,9 +65,9 @@ vWordApp.OlePropertyGet("Documents").OleFunction("Add");
 Variant vSelect = vWordApp.OlePropertyGet("Selection");
 
 // 插入一段文字
-String str1 = "要插入的第一段文字\r\n换一个行先";
-vSelect.OleProcedure("TypeText", WideString(str1));
-vSelect.OleProcedure("TypeParagraph");
+//String str1 = "要插入的第一段文字\r\n换一个行先";
+//vSelect.OleProcedure("TypeText", WideString(str1));
+//vSelect.OleProcedure("TypeParagraph");
 
 // 插入一个表格
 int nRowCount = text->Count + 1; // 行
@@ -73,7 +77,7 @@ vWordApp.OlePropertyGet("ActiveDocument").OlePropertyGet("Tables")
 nRowCount, nColCount,1,0);
  // DefaultTableBehavior:=wdWord9TableBehavior
  // AutoFitBehavior:=wdAutoFitFixed
-word_table = word_activedoc.OlePropertyGet("Tables").OleFunction("Item", 1);
+   word_table = vWordApp.OlePropertyGet("ActiveDocument").OlePropertyGet("Tables").OleFunction("Item", 1);
    my_cell = word_table.OleFunction("Cell", (Variant)1, (Variant)1);
    my_cell.OlePropertySet("Range", "序号");
 
@@ -81,15 +85,16 @@ word_table = word_activedoc.OlePropertyGet("Tables").OleFunction("Item", 1);
 	my_cell = word_table.OleFunction("Cell", (Variant)(j + 1), (Variant)1);
 	my_cell.OlePropertySet("Range", j);
 	my_cell = word_table.OleFunction("Cell", (Variant)(j + 1), (Variant)2);
-	my_cell.OlePropertySet("Range", text->Strings[j-1].c_str());
+
+	my_cell.OlePropertySet("Range", text->Strings[j-1].t_str());
  }
 
 // 将光标移到文档结尾
 vWordApp.OlePropertyGet("Selection").OleProcedure("EndKey", 6); //wdStory
 
 // 再插入一段文字
-String str2 = "要插入的第二段文字";
-vSelect.OleProcedure("TypeText", WideString(str2));
+//String str2 = "要插入的第二段文字";
+//vSelect.OleProcedure("TypeText", WideString(str2));
 
 
 //	//创建Word对象：
