@@ -3,11 +3,14 @@
 #include <vcl.h>
 #pragma hdrstop
 #include "comobj.hpp"
+
 #include "changeity.h"
+#include <boost/regex.hpp>
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
 TForm2 *Form2;
+using namespace boost;
 //---------------------------------------------------------------------------
 __fastcall TForm2::TForm2(TComponent* Owner)
 	: TForm(Owner)
@@ -35,7 +38,7 @@ void __fastcall TForm2::转换Click(TObject *Sender)
 			  rf << rfReplaceAll;
 			  AnsiString Result = StringReplace(sstext,"\r","",rf);
 
-			  Result = StringReplace(Result,".","",rf);
+//			  Result = StringReplace(Result,".","",rf);
 //			  ShowMessage(Result);
 //			  Result = Result.SubString(3,Result.Length());
 //              ShowMessage(Result);
@@ -43,6 +46,34 @@ void __fastcall TForm2::转换Click(TObject *Sender)
 //			  regex re(pattern);
 //			  String fmt = "20%";
 //			  String ret = regex_replace(str,re,fmt);
+            // 正则表达式去掉文字前面的数字
+//			std::string str = "192.168.1.1";
+//
+//			boost::regex e1, e2;
+//			e1.assign("\\d+");
+//			regex expression("\\d+");
+////			boost::basic_regex();
+////			boost::smatch what;
+//			cmatch what;
+//
+////			std::string::const_iterator start = str.begin();
+////			std::string::const_iterator end = str.end();
+////			while ( boost::regex_search(start, end, what, expression) )
+////			{
+////				ShowMessage(what[0].str().c_str());
+////				start = what[0].second;
+////			}
+////			return boost::regex_split(std::back_inserter(l), s);
+////			boost::regex_search(start, end, what, e1);
+//			regex_match(str, what, expression);
+			std::string test = "1234567890";
+			boost::regex testPattern( "\\d" );
+			boost::match_results<std::string::const_iterator> testMatches;
+			std::string::const_iterator startPos = test.begin();
+			std::string::const_iterator endPos = test.end();
+			while( regex_search( startPos, endPos, testMatches, testPattern ) ) {
+				// Do stuff: record match value, increment start position
+			}
 
 			  text->Append(Result);
 		   }
@@ -121,3 +152,4 @@ vWordApp.OlePropertyGet("Selection").OleProcedure("EndKey", 6); //wdStory
 
 }
 //---------------------------------------------------------------------------
+
