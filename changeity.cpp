@@ -1,23 +1,25 @@
-//---------------------------------------------------------------------------
+ï»¿
 
 #include <vcl.h>
 #pragma hdrstop
 #include "comobj.hpp"
 
 #include "changeity.h"
-#include <boost/regex.hpp>
+#include <regex>
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
 TForm2 *Form2;
-using namespace boost;
+//using namespace boost;
+using namespace std;
+
 //---------------------------------------------------------------------------
 __fastcall TForm2::TForm2(TComponent* Owner)
 	: TForm(Owner)
 {
 }
 //---------------------------------------------------------------------------
-void __fastcall TForm2::×ª»»Click(TObject *Sender)
+void __fastcall TForm2::è½¬æ¢Click(TObject *Sender)
 {
 		String stext = cc->Text.Trim().c_str();
 	   char str[5000] = "";
@@ -26,8 +28,24 @@ void __fastcall TForm2::×ª»»Click(TObject *Sender)
 	   char split[] = "\n";
 	   char * p = strtok (str,split);
 
-	   TStringList *text;
+	   TStringList *text, *regexString;
 	   text = new TStringList();
+	   regexString = new TStringList();
+	   // è¡¥å……æ­£åˆ™è¡¨è¾¾å¼
+	   regexString->Append("^\\w+\\."); // a. A. 1. _
+	   regexString->Append("^\\w+ã€");  // aã€Aã€1ã€_
+	   regexString->Append("^\\([\u4E00-\u9FA5]{1,3}\\)");  // (ä¸€)  (äºŒ) (ä¸‰)
+	   regexString->Append("^\\ï¼ˆ[\u4E00-\u9FA5]{1,3}\\ï¼‰");   // ä¸­æ–‡çš„æ‹¬å·
+	   regexString->Append("^\\(\\w+\\)");   // è‹±æ–‡çš„æ‹¬å·
+	   regexString->Append("^\\ï¼ˆ\\w+\\ï¼‰"); // (a) (b) (A) (B) (1) ï¼ˆ2) è‹±æ–‡æ‹¬å·
+	   regexString->Append("^\\w+\\ï¼‰");   // ä¸­æ–‡çš„æ‹¬å·
+	   regexString->Append("^\\w+\\)"); // a) b) A) B) 1) 2) è‹±æ–‡æ‹¬å·
+	   regexString->Append("^\\w+\\>");
+	   regexString->Append("^[\u4E00-\u9FA5]{1,3}ã€");  // ä¸€ã€ äºŒã€ åä¸€ã€
+		// æœ€å¤§åˆ°20 ç‰¹æ®Šå­—ç¬¦æ— æ³•ç”¨èŒƒå›´çš„æ–¹å¼å»å†™
+//	   regexString->Append("^[\u2460\u2461\u2462\u2463\u2464\u2465\u2466\u2467\u2468\u2469\u2473]");  // â‘  â‘¡ â‘¢
+	   regexString->Append("^[â‘ â‘¡â‘¢â‘£â‘¤â‘¥â‘¦â‘§â‘¨â‘©â‘ªâ‘«â‘¬â‘­â‘®â‘¯â‘°â‘±â‘²â‘³]");  // â‘  â‘¡ â‘¢
+
 	   int i = 0;
 	   while(p!= NULL) {
 		   String ssss = p;
@@ -38,42 +56,34 @@ void __fastcall TForm2::×ª»»Click(TObject *Sender)
 			  rf << rfReplaceAll;
 			  AnsiString Result = StringReplace(sstext,"\r","",rf);
 
-//			  Result = StringReplace(Result,".","",rf);
-//			  ShowMessage(Result);
-//			  Result = Result.SubString(3,Result.Length());
-//              ShowMessage(Result);
-//			  String pattern = " ";
-//			  regex re(pattern);
-//			  String fmt = "20%";
-//			  String ret = regex_replace(str,re,fmt);
-            // ÕıÔò±í´ïÊ½È¥µôÎÄ×ÖÇ°ÃæµÄÊı×Ö
-//			std::string str = "192.168.1.1";
+			  // å»é™¤æ— æ•ˆçš„æ¢è¡Œ
+			  if (Result.IsEmpty()) {
+					p = strtok(NULL,split);
+                  continue;
+			  }
+
+		   // æ­£åˆ™å±æ€§ç”¨æ³•å‚è€ƒ https://blog.csdn.net/gufengaoyue/article/details/16342115
+
+			 Variant    Axl= Variant::CreateObject("VBScript.RegExp"); //åˆ©ç”¨è„šæœ¬é‡Œçš„æ­£åˆ™
+			  Axl.OlePropertySet("Global",false);//åªåŒ¹é…ç¬¬ä¸€ä¸ª
+
+			  for (int kk = 0; kk < regexString->Count; kk++) {
+					Axl.OlePropertySet("Pattern", regexString->Strings[kk].t_str());  //å†™å…¥æ­£åˆ™è¡¨è¾¾å¼
+					if (Axl.OleFunction("Test",Result.c_str())) {
+					   Result = Axl.OleFunction("Replace",Result.c_str(), "");
+//					   ShowMessage(Result);
+					   break;
+					}
+
+			  }
+
+//			  Axl.OlePropertySet("Pattern", "\\d+\\.");  //å†™å…¥æ­£åˆ™è¡¨è¾¾å¼
+//			  Variant    rtn=Axl.OleFunction("Execute",Result.c_str());//å¼€å§‹æ‰§è¡Œ
+//			  for (int k=0; k!= rtn.OlePropertyGet("Count"); k++) {
+//				 ShowMessage((rtn.OlePropertyGet("Item",k).OlePropertyGet("Value")));//å–å‡ºåŒ¹é…çš„ä¸œä¸œ
+//			  }
 //
-//			boost::regex e1, e2;
-//			e1.assign("\\d+");
-//			regex expression("\\d+");
-////			boost::basic_regex();
-////			boost::smatch what;
-//			cmatch what;
-//
-////			std::string::const_iterator start = str.begin();
-////			std::string::const_iterator end = str.end();
-////			while ( boost::regex_search(start, end, what, expression) )
-////			{
-////				ShowMessage(what[0].str().c_str());
-////				start = what[0].second;
-////			}
-////			return boost::regex_split(std::back_inserter(l), s);
-////			boost::regex_search(start, end, what, e1);
-//			regex_match(str, what, expression);
-			std::string test = "1234567890";
-			boost::regex testPattern( "\\d" );
-			boost::match_results<std::string::const_iterator> testMatches;
-			std::string::const_iterator startPos = test.begin();
-			std::string::const_iterator endPos = test.end();
-			while( regex_search( startPos, endPos, testMatches, testPattern ) ) {
-				// Do stuff: record match value, increment start position
-			}
+//			  Result = Axl.OleFunction("Replace",Result.c_str(), "");
 
 			  text->Append(Result);
 		   }
@@ -81,75 +91,59 @@ void __fastcall TForm2::×ª»»Click(TObject *Sender)
        }
 
 
-Variant WordApp,WordDocs,WordDoc,vWordApp;
-Variant word_activedoc;
-Variant word_select;
-Variant word_table;
-Variant my_cell;
+	Variant WordApp,WordDocs,WordDoc,vWordApp;
+	Variant word_activedoc;
+	Variant word_select;
+	Variant word_table;
+	Variant my_cell;
 
-vWordApp = CreateOleObject("Word.Application");
-// ÏÔÊ¾Word½çÃæ
-vWordApp.OlePropertySet("Visible", true);
-// ĞÂ½¨Ò»¸öÎÄµµ
-vWordApp.OlePropertyGet("Documents").OleFunction("Add");
-//
-Variant vSelect = vWordApp.OlePropertyGet("Selection");
+	vWordApp = CreateOleObject("Word.Application");
+	// æ˜¾ç¤ºWordç•Œé¢
+	vWordApp.OlePropertySet("Visible", true);
+	// æ–°å»ºä¸€ä¸ªæ–‡æ¡£
+	vWordApp.OlePropertyGet("Documents").OleFunction("Add");
+	//
+	Variant vSelect = vWordApp.OlePropertyGet("Selection");
 
-// ²åÈëÒ»¶ÎÎÄ×Ö
-//String str1 = "Òª²åÈëµÄµÚÒ»¶ÎÎÄ×Ö\r\n»»Ò»¸öĞĞÏÈ";
-//vSelect.OleProcedure("TypeText", WideString(str1));
-//vSelect.OleProcedure("TypeParagraph");
+	// æ’å…¥ä¸€æ®µæ–‡å­—
+	//String str1 = "è¦æ’å…¥çš„ç¬¬ä¸€æ®µæ–‡å­—\r\næ¢ä¸€ä¸ªè¡Œå…ˆ";
+	//vSelect.OleProcedure("TypeText", WideString(str1));
+	//vSelect.OleProcedure("TypeParagraph");
 
-// ²åÈëÒ»¸ö±í¸ñ
-int nRowCount = text->Count + 1; // ĞĞ
-int nColCount = 2; // ÁĞ
-vWordApp.OlePropertyGet("ActiveDocument").OlePropertyGet("Tables")
-.OleProcedure("Add", vSelect.OlePropertyGet("Range"),
-nRowCount, nColCount,1,0);
- // DefaultTableBehavior:=wdWord9TableBehavior
- // AutoFitBehavior:=wdAutoFitFixed
-   word_table = vWordApp.OlePropertyGet("ActiveDocument").OlePropertyGet("Tables").OleFunction("Item", 1);
-   my_cell = word_table.OleFunction("Cell", (Variant)1, (Variant)1);
-   my_cell.OlePropertySet("Range", "ĞòºÅ");
+	// æ’å…¥ä¸€ä¸ªè¡¨æ ¼
+	int nRowCount = text->Count + 1; // è¡Œ
+	int nColCount = 2; // åˆ—
+	vWordApp.OlePropertyGet("ActiveDocument").OlePropertyGet("Tables")
+	.OleProcedure("Add", vSelect.OlePropertyGet("Range"),
+	nRowCount, nColCount,1,0);
+	 // DefaultTableBehavior:=wdWord9TableBehavior
+	 // AutoFitBehavior:=wdAutoFitFixed
+	   word_table = vWordApp.OlePropertyGet("ActiveDocument").OlePropertyGet("Tables").OleFunction("Item", 1);
+	   my_cell = word_table.OleFunction("Cell", (Variant)1, (Variant)1);
+	   my_cell.OlePropertySet("Range", "åºå·");
 
- for (int j = 1; j < text->Count + 1; j++) {
-	my_cell = word_table.OleFunction("Cell", (Variant)(j + 1), (Variant)1);
-	my_cell.OlePropertySet("Range", j);
-	my_cell = word_table.OleFunction("Cell", (Variant)(j + 1), (Variant)2);
+	 for (int j = 1; j < text->Count + 1; j++) {
+		my_cell = word_table.OleFunction("Cell", (Variant)(j + 1), (Variant)1);
+		my_cell.OlePropertySet("Range", j);
+		my_cell = word_table.OleFunction("Cell", (Variant)(j + 1), (Variant)2);
 
-	my_cell.OlePropertySet("Range", text->Strings[j-1].t_str());
- }
+		my_cell.OlePropertySet("Range", text->Strings[j-1].t_str());
+	 }
 
-// ½«¹â±êÒÆµ½ÎÄµµ½áÎ²
-vWordApp.OlePropertyGet("Selection").OleProcedure("EndKey", 6); //wdStory
+	// å°†å…‰æ ‡ç§»åˆ°æ–‡æ¡£ç»“å°¾
+	vWordApp.OlePropertyGet("Selection").OleProcedure("EndKey", 6); //wdStory
 
-// ÔÙ²åÈëÒ»¶ÎÎÄ×Ö
-//String str2 = "Òª²åÈëµÄµÚ¶ş¶ÎÎÄ×Ö";
-//vSelect.OleProcedure("TypeText", WideString(str2));
-
-
-//	//´´½¨Word¶ÔÏó£º
-//   WordApp=CreateOleObject("Word.Application");
-//   WordDocs=WordApp.OlePropertyGet("Documents");
-//   //´ò¿ªWordÎÄµµ£º
-//   WordDoc=WordDocs.OleFunction("Open","c:\\test.doc");
-//   WordApp.OlePropertySet("Visible",true);
-//   WordDoc = WordApp.OlePropertyGet("Documents");
-//   word_activedoc = WordApp.OlePropertyGet("ActiveDocument");
-//   //ĞŞ¸Ä±í¸ñ: Cell ĞĞ,ÁĞ
-//   word_table = word_activedoc.OlePropertyGet("Tables").OleFunction("Item", 1);
-//   my_cell = word_table.OleFunction("Cell", (Variant)1, (Variant)1);
-//   my_cell.OlePropertySet("Range", "11)");
-//   my_cell = word_table.OleFunction("Cell", (Variant)2, (Variant)1);
-//   my_cell.OlePropertySet("Range", "21)");
-//   my_cell = word_table.OleFunction("Cell", (Variant)2, (Variant)2);
-//   my_cell.OlePropertySet("Range", "22)");
-//   //±£´æĞŞ¸ÄÄÚÈİ:
+	// å†æ’å…¥ä¸€æ®µæ–‡å­—
+	//String str2 = "è¦æ’å…¥çš„ç¬¬äºŒæ®µæ–‡å­—";
+	//vSelect.OleProcedure("TypeText", WideString(str2));
+//   //ä¿å­˜ä¿®æ”¹å†…å®¹:
 //   word_activedoc.OleProcedure("Save");
-//   //´òÓ¡ÎÄµµ:
+//   //æ‰“å°æ–‡æ¡£:
 //   WordApp.OlePropertyGet("ActiveDocument").OleFunction("PrintOut");
 //   WordApp.OleProcedure("Quit");
 
 }
+
+
 //---------------------------------------------------------------------------
 

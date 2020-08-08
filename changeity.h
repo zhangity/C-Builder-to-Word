@@ -15,9 +15,11 @@ __published:	// IDE-managed Components
 	TRichEdit *cc;
 	TButton *×ª»»;
 	void __fastcall ×ª»»Click(TObject *Sender);
+
 private:	// User declarations
 public:		// User declarations
 	__fastcall TForm2(TComponent* Owner);
+	void Utf8SubStr(String string, int length);
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TForm2 *Form2;
