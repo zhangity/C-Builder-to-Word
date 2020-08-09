@@ -14,6 +14,10 @@ class TForm2 : public TForm
 __published:	// IDE-managed Components
 	TRichEdit *cc;
 	TButton *×ª»»;
+	TLabel *Label1;
+	TLabel *Label2;
+	TLabel *Label3;
+	TLabel *successTime;
 	void __fastcall ×ª»»Click(TObject *Sender);
 
 private:	// User declarations

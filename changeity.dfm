@@ -2,7 +2,7 @@
   Left = 0
   Top = 0
   Caption = 'Form2'
-  ClientHeight = 383
+  ClientHeight = 374
   ClientWidth = 830
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -13,11 +13,63 @@
   OldCreateOrder = False
   PixelsPerInch = 96
   TextHeight = 13
+  object Label1: TLabel
+    Left = 24
+    Top = 17
+    Width = 195
+    Height = 16
+    Caption = #22312#19979#26041#36755#20837#38656#35201#36716#25442#30340#25991#23383#65306
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label2: TLabel
+    Left = 709
+    Top = 169
+    Width = 60
+    Height = 16
+    Caption = #25104#21151#36716#25442
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label3: TLabel
+    Left = 788
+    Top = 169
+    Width = 15
+    Height = 16
+    Caption = #34892
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object successTime: TLabel
+    Left = 773
+    Top = 169
+    Width = 7
+    Height = 16
+    Caption = '0'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clGreen
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
   object cc: TRichEdit
     Left = 24
-    Top = 21
+    Top = 48
     Width = 657
-    Height = 337
+    Height = 310
     Font.Charset = GB2312_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -27,11 +79,17 @@
     TabOrder = 0
   end
   object 转换: TButton
-    Left = 704
-    Top = 21
+    Left = 709
+    Top = 48
     Width = 113
-    Height = 52
+    Height = 97
     Caption = #36716#25442
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
     TabOrder = 1
     OnClick = 转换Click
   end

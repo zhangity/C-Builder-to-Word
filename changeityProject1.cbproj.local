@@ -5,7 +5,8 @@
     <Transaction>2020/08/07 23:21:38.133.h,C:\Users\zhang.DESKTOP-MAO143N\Documents\RAD Studio\Projects\Unit2.h=C:\Users\zhang.DESKTOP-MAO143N\Documents\RAD Studio\Projects\changeity.h</Transaction>
     <Transaction>2020/08/07 23:21:38.133.dfm,C:\Users\zhang.DESKTOP-MAO143N\Documents\RAD Studio\Projects\Unit2.dfm=C:\Users\zhang.DESKTOP-MAO143N\Documents\RAD Studio\Projects\changeity.dfm</Transaction>
     <Transaction>2020/08/07 23:33:10.720.cbproj,C:\Users\zhang.DESKTOP-MAO143N\Documents\RAD Studio\Projects\Project1.cbproj=C:\Users\zhang.DESKTOP-MAO143N\Documents\RAD Studio\Projects\changeityProject1.cbproj</Transaction>
-  </Transactions>  <ProjectSortOrder AutoSort="0" SortType="0">
+  </Transactions>
+	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="changeity.cpp"/>
     <File Path="changeity.cpp"/>
     <File Path="changeity.dfm"/>

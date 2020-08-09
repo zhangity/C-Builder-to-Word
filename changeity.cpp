@@ -144,6 +144,7 @@ void __fastcall TForm2::转换Click(TObject *Sender)
 //   WordApp.OlePropertyGet("ActiveDocument").OleFunction("PrintOut");
 	// 不保存退出
    vWordApp.OleProcedure("Quit", 0);
+   successTime->Caption = nRowCount - 1;
 
 }
 
