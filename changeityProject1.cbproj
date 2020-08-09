@@ -19,6 +19,7 @@
 			<Base>true</Base>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Base)'!=''">
+			<OutputExt>exe</OutputExt>
 			<LinkPackageImports>rtl.bpi;vcl.bpi</LinkPackageImports>
 			<PackageImports>vclx.bpi;vcl.bpi;vclimg.bpi;dbrtl.bpi;Rave77VCL.bpi;bdertl.bpi;rtl.bpi;bcbie.bpi;vclactnband.bpi;xmlrtl.bpi;bcbsmp.bpi;vcldb.bpi;vcldbx.bpi;vcltouch.bpi;dsnap.bpi;dsnapcon.bpi;TeeUI.bpi;TeeDB.bpi;Tee.bpi;vclib.bpi;ibxpress.bpi;adortl.bpi;IndyCore.bpi;IndySystem.bpi;IndyProtocols.bpi;inet.bpi;intrawebdb_100_140.bpi;Intraweb_100_140.bpi;VclSmp.bpi;vclie.bpi;vclribbon.bpi</PackageImports>
 			<Multithreaded>true</Multithreaded>
@@ -61,16 +62,16 @@
 			<ILINK_TranslatedLibraryPath>$(BDS)\lib\$(LANGDIR)\release;$(ILINK_TranslatedLibraryPath)</ILINK_TranslatedLibraryPath>
 		</PropertyGroup>
 		<ItemGroup>
-			<CppCompile Include="changeity.cpp">
-				<Form>Form2</Form>
-				<DependentOn>changeity.h</DependentOn>
-				<BuildOrder>2</BuildOrder>
+			<CppCompile Include="changeityProject1.cpp">
+				<BuildOrder>0</BuildOrder>
 			</CppCompile>
 			<ResFiles Include="changeityProject1.res">
 				<BuildOrder>1</BuildOrder>
 			</ResFiles>
-			<CppCompile Include="changeityProject1.cpp">
-				<BuildOrder>0</BuildOrder>
+			<CppCompile Include="changeity.cpp">
+				<Form>Form2</Form>
+				<DependentOn>changeity.h</DependentOn>
+				<BuildOrder>2</BuildOrder>
 			</CppCompile>
 			<FormResources Include="changeity.dfm"/>
 			<BuildConfiguration Include="Base">
