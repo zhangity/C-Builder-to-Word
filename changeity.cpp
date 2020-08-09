@@ -99,7 +99,7 @@ void __fastcall TForm2::转换Click(TObject *Sender)
 
 	vWordApp = CreateOleObject("Word.Application");
 	// 显示Word界面
-	vWordApp.OlePropertySet("Visible", true);
+	vWordApp.OlePropertySet("Visible", false);
 	// 新建一个文档
 	vWordApp.OlePropertyGet("Documents").OleFunction("Add");
 	//
@@ -116,8 +116,7 @@ void __fastcall TForm2::转换Click(TObject *Sender)
 	// 添加表格的微软官方API https://docs.microsoft.com/zh-cn/office/vba/api/word.tables.add
 	vWordApp.OlePropertyGet("ActiveDocument").OlePropertyGet("Tables")
 	.OleProcedure("Add", vSelect.OlePropertyGet("Range"),nRowCount, nColCount,1,0);
-	 // DefaultTableBehavior:=wdWord9TableBehavior
-	 // AutoFitBehavior:=wdAutoFitFixed
+
 	   word_table = vWordApp.OlePropertyGet("ActiveDocument").OlePropertyGet("Tables").OleFunction("Item", 1);
 	   my_cell = word_table.OleFunction("Cell", (Variant)1, (Variant)1);
 	   my_cell.OlePropertySet("Range", "序号");
@@ -133,12 +132,9 @@ void __fastcall TForm2::转换Click(TObject *Sender)
 	// 将光标移到文档结尾
 //	vWordApp.OlePropertyGet("Selection").OleProcedure("EndKey", 6); //wdStory
 	// 设定选取范围 并复制
-	vSelect.OleProcedure("SetRange", vSelect.OlePropertyGet("Start"), vWordApp.OlePropertyGet("ActiveDocument").OlePropertyGet("Content").OlePropertyGet("End"));
-	vSelect.OleProcedure("Copy"); //wdStory
-//	 Clipboard()->AsText = "拷贝到剪贴版的文字数据";
-//	WorkSheet.OlePropertyGet（“ Cell”，iRow，iCol）.OleProcedure（“ Select”）;
-//	WorkSheet.OleProcedure（“ Paste”）;
-//    WordApp.OlePropertyGet("ActiveDocument").OleFunction("Copy");
+	vSelect.OleProcedure("SetRange", vSelect.OlePropertyGet("Start"),
+				vWordApp.OlePropertyGet("ActiveDocument").OlePropertyGet("Content").OlePropertyGet("End"));
+	vSelect.OleProcedure("Copy"); 
 	// 再插入一段文字
 	//String str2 = "要插入的第二段文字";
 	//vSelect.OleProcedure("TypeText", WideString(str2));
@@ -146,7 +142,8 @@ void __fastcall TForm2::转换Click(TObject *Sender)
 //   word_activedoc.OleProcedure("Save");
 //   //打印文档:
 //   WordApp.OlePropertyGet("ActiveDocument").OleFunction("PrintOut");
-//   vWordApp.OleProcedure("Quit");
+	// 不保存退出
+   vWordApp.OleProcedure("Quit", 0);
 
 }
 
