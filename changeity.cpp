@@ -46,6 +46,7 @@ void __fastcall TForm2::转换Click(TObject *Sender)
 //	   regexString->Append("^[\u2460\u2461\u2462\u2463\u2464\u2465\u2466\u2467\u2468\u2469\u2473]");  // ① ② ③
 	   regexString->Append("^[①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳]");  // ① ② ③
 
+	   // 1.没有点和顿号的情况，后面有空格可能有多个 加左右trim   2. 没有序号  3.使用帮助或提示已经复制到剪切板
 	   int i = 0;
 	   while(p!= NULL) {
 		   String ssss = p;
@@ -149,5 +150,15 @@ void __fastcall TForm2::转换Click(TObject *Sender)
 }
 
 
+//---------------------------------------------------------------------------
+
+
+void __fastcall TForm2::clearClick(TObject *Sender)
+{
+	cc->Text = "";   // 清空
+	successTime->Caption = 0 ;// 转换次数改成0
+	cc->SetFocus();   // 获取光标闪烁
+
+}
 //---------------------------------------------------------------------------
 

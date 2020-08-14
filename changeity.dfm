@@ -1,7 +1,7 @@
 ﻿object Form2: TForm2
   Left = 0
   Top = 0
-  Caption = 'Form2'
+  Caption = #24207#21495'-'#34920#26684#36716#25442#22120
   ClientHeight = 374
   ClientWidth = 830
   Color = clBtnFace
@@ -92,5 +92,20 @@
     ParentFont = False
     TabOrder = 1
     OnClick = 转换Click
+  end
+  object clear: TButton
+    Left = 709
+    Top = 224
+    Width = 113
+    Height = 97
+    Caption = #28165#31354
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 2
+    OnClick = clearClick
   end
 end

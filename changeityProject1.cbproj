@@ -61,16 +61,16 @@
 			<ILINK_TranslatedLibraryPath>$(BDS)\lib\$(LANGDIR)\release;$(ILINK_TranslatedLibraryPath)</ILINK_TranslatedLibraryPath>
 		</PropertyGroup>
 		<ItemGroup>
-			<CppCompile Include="changeity.cpp">
-				<Form>Form2</Form>
-				<DependentOn>changeity.h</DependentOn>
-				<BuildOrder>2</BuildOrder>
+			<CppCompile Include="changeityProject1.cpp">
+				<BuildOrder>0</BuildOrder>
 			</CppCompile>
 			<ResFiles Include="changeityProject1.res">
 				<BuildOrder>1</BuildOrder>
 			</ResFiles>
-			<CppCompile Include="changeityProject1.cpp">
-				<BuildOrder>0</BuildOrder>
+			<CppCompile Include="changeity.cpp">
+				<Form>Form2</Form>
+				<DependentOn>changeity.h</DependentOn>
+				<BuildOrder>2</BuildOrder>
 			</CppCompile>
 			<FormResources Include="changeity.dfm"/>
 			<BuildConfiguration Include="Base">
