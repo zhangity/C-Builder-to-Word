@@ -1,7 +1,7 @@
 ﻿object Form2: TForm2
   Left = 0
   Top = 0
-  Caption = #24207#21495'-'#34920#26684#36716#25442#22120
+  Caption = #21525#22825#20234#30340#24207#21495'-'#34920#26684#36716#25442#22120
   ClientHeight = 374
   ClientWidth = 830
   Color = clBtnFace
@@ -70,13 +70,20 @@
     Top = 48
     Width = 657
     Height = 310
+    Hint = #28857#20987#36716#25442#21518#25104#21151#34892#25968#21464#21270#21518#21487#30452#25509#31896#36148#65281
+    HelpContext = 2
     Font.Charset = GB2312_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = []
+    HideScrollBars = False
     ParentFont = False
+    ParentShowHint = False
+    ScrollBars = ssBoth
+    ShowHint = True
     TabOrder = 0
+    OnChange = ccChange
   end
   object 转换: TButton
     Left = 709
@@ -107,5 +114,20 @@
     ParentFont = False
     TabOrder = 2
     OnClick = clearClick
+  end
+  object help: TButton
+    Left = 592
+    Top = 8
+    Width = 89
+    Height = 34
+    Caption = #20351#29992#24110#21161
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 3
+    OnClick = helpClick
   end
 end

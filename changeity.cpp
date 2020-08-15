@@ -40,13 +40,15 @@ void __fastcall TForm2::转换Click(TObject *Sender)
 	   regexString->Append("^\\（\\w+\\）"); // (a) (b) (A) (B) (1) （2) 英文括号
 	   regexString->Append("^\\w+\\）");   // 中文的括号
 	   regexString->Append("^\\w+\\)"); // a) b) A) B) 1) 2) 英文括号
-	   regexString->Append("^\\w+\\>");
+	   regexString->Append("^\\w+\\>");  // 1>  a>
 	   regexString->Append("^[\u4E00-\u9FA5]{1,3}、");  // 一、 二、 十一、
 		// 最大到20 特殊字符无法用范围的方式去写
 //	   regexString->Append("^[\u2460\u2461\u2462\u2463\u2464\u2465\u2466\u2467\u2468\u2469\u2473]");  // ① ② ③
 	   regexString->Append("^[①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳]");  // ① ② ③
 
-	   // 1.没有点和顿号的情况，后面有空格可能有多个 加左右trim   2. 没有序号  3.使用帮助或提示已经复制到剪切板
+	   // 不带点的场景  需要放在最后否则会和其他1) 这种有冲突
+	   regexString->Append("^\\w+");  // a A 1_
+
 	   int i = 0;
 	   while(p!= NULL) {
 		   String ssss = p;
@@ -85,7 +87,7 @@ void __fastcall TForm2::转换Click(TObject *Sender)
 //			  }
 //
 //			  Result = Axl.OleFunction("Replace",Result.c_str(), "");
-
+			  Result = Result.Trim();  // 去掉前后的空格
 			  text->Append(Result);
 		   }
 		   p = strtok(NULL,split);
@@ -159,6 +161,18 @@ void __fastcall TForm2::clearClick(TObject *Sender)
 	successTime->Caption = 0 ;// 转换次数改成0
 	cc->SetFocus();   // 获取光标闪烁
 
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm2::ccChange(TObject *Sender)
+{
+     successTime->Caption = 0 ;// 转换次数改成0
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm2::helpClick(TObject *Sender)
+{
+	ShowMessage("点击转换按钮，行数变化后可直接粘贴！");
 }
 //---------------------------------------------------------------------------
 

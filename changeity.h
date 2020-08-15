@@ -19,8 +19,11 @@ __published:	// IDE-managed Components
 	TLabel *Label3;
 	TLabel *successTime;
 	TButton *clear;
+	TButton *help;
 	void __fastcall ×ª»»Click(TObject *Sender);
 	void __fastcall clearClick(TObject *Sender);
+	void __fastcall ccChange(TObject *Sender);
+	void __fastcall helpClick(TObject *Sender);
 
 private:	// User declarations
 public:		// User declarations
