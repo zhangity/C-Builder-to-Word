@@ -1,6 +1,6 @@
 ﻿object Form2: TForm2
-  Left = 0
-  Top = 0
+  Left = 540
+  Top = 249
   Caption = #21525#22825#20234#30340#24207#21495'-'#34920#26684#36716#25442#22120
   ClientHeight = 374
   ClientWidth = 830
@@ -11,6 +11,7 @@
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poDesigned
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
