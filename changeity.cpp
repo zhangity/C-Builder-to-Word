@@ -44,6 +44,8 @@ void __fastcall TForm2::转换Click(TObject *Sender)
 	   regexString->Append("^[\u4E00-\u9FA5]{1,3}、");  // 一、 二、 十一、
 		// 最大到20 特殊字符无法用范围的方式去写
 //	   regexString->Append("^[\u2460\u2461\u2462\u2463\u2464\u2465\u2466\u2467\u2468\u2469\u2473]");  // ① ② ③
+	   regexString->Append("^[①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳]、");  // ① ② ③
+	   regexString->Append("^[①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳]\\.");  // ① ② ③
 	   regexString->Append("^[①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳]");  // ① ② ③
 
 	   // 不带点的场景  需要放在最后否则会和其他1) 这种有冲突
