@@ -131,4 +131,29 @@
     TabOrder = 3
     OnClick = helpClick
   end
+  object Column1: TRichEdit
+    Left = 280
+    Top = 16
+    Width = 105
+    Height = 26
+    Font.Charset = GB2312_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    Lines.Strings = (
+      'Column1')
+    ParentFont = False
+    TabOrder = 4
+    OnChange = Column1Change
+  end
+  object Column2: TEdit
+    Left = 424
+    Top = 17
+    Width = 121
+    Height = 21
+    TabOrder = 5
+    Text = 'Column2'
+    OnChange = Column2Change
+  end
 end

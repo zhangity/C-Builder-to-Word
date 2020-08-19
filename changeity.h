@@ -20,11 +20,15 @@ __published:	// IDE-managed Components
 	TLabel *successTime;
 	TButton *clear;
 	TButton *help;
+	TRichEdit *Column1;
+	TEdit *Column2;
 	void __fastcall ×ª»»Click(TObject *Sender);
 	void __fastcall clearClick(TObject *Sender);
 	void __fastcall ccChange(TObject *Sender);
 	void __fastcall helpClick(TObject *Sender);
-
+	String  __fastcall trim(String &mystr);
+	void __fastcall Column1Change(TObject *Sender);
+	void __fastcall Column2Change(TObject *Sender);
 private:	// User declarations
 public:		// User declarations
 	__fastcall TForm2(TComponent* Owner);

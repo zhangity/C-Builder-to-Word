@@ -17,14 +17,23 @@ using namespace std;
 __fastcall TForm2::TForm2(TComponent* Owner)
 	: TForm(Owner)
 {
+Column1->Text = 37.7;
+Column2->Text =  461;
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm2::转换Click(TObject *Sender)
 {
 		String stext = cc->Text.Trim().c_str();
+
+		// 去掉空格
+		TReplaceFlags rf1;
+		rf1 << rfReplaceAll;
+		stext =  StringReplace(AnsiString(stext.c_str()).c_str()," ","",rf1);
+
 	   char str[5000] = "";
 //	   strcpy(str,AnsiString(stext.c_str()).c_str());
 		strcpy(str,stext.t_str());
+
 	   char split[] = "\n";
 	   char * p = strtok (str,split);
 
@@ -46,7 +55,10 @@ void __fastcall TForm2::转换Click(TObject *Sender)
 //	   regexString->Append("^[\u2460\u2461\u2462\u2463\u2464\u2465\u2466\u2467\u2468\u2469\u2473]");  // ① ② ③
 	   regexString->Append("^[①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳]、");  // ① ② ③
 	   regexString->Append("^[①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳]\\.");  // ① ② ③
+	   regexString->Append("^[①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳]\\．");  // ① ② ③
 	   regexString->Append("^[①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳]");  // ① ② ③
+
+	   regexString->Append("^[⑴⑵⑶⑷⑸⑹⑺⑻⑼⑽⑾⑿⒀⒁⒂⒃⒄⒅⒆⒇]"); //  特殊的 ⑴ ⑵ ⑶ ⑷
 
 	   // 不带点的场景  需要放在最后否则会和其他1) 这种有冲突
 	   regexString->Append("^\\w+");  // a A 1_
@@ -61,6 +73,7 @@ void __fastcall TForm2::转换Click(TObject *Sender)
 			  rf << rfReplaceAll;
 			  AnsiString Result = StringReplace(sstext,"\r","",rf);
 
+              Result = Result.Trim();
 			  // 去除无效的换行
 			  if (Result.IsEmpty()) {
 					p = strtok(NULL,split);
@@ -123,14 +136,38 @@ void __fastcall TForm2::转换Click(TObject *Sender)
 	.OleProcedure("Add", vSelect.OlePropertyGet("Range"),nRowCount, nColCount,1,0);
 
 	   word_table = vWordApp.OlePropertyGet("ActiveDocument").OlePropertyGet("Tables").OleFunction("Item", 1);
+
+	   // 设置表格列宽为自动    1-自动 2-百分比 3-固定 磅为单位
+	   Variant varColumnWidth1 = word_table.OlePropertyGet("Columns").OleFunction("Item", 1); // 第1列
+	   Variant varColumnWidth2 = word_table.OlePropertyGet("Columns").OleFunction("Item", 2); // 第2列
+	   varColumnWidth1.OlePropertySet("PreferredWidthType", 3);
+	   varColumnWidth1.OlePropertySet("PreferredWidth", atoi(Column1->Text.t_str())); //37.7
+	   varColumnWidth2.OlePropertySet("PreferredWidthType", 3);
+	   varColumnWidth2.OlePropertySet("PreferredWidth", atoi(Column2->Text.t_str())); // 451.61
+
+	   // 第一行第一列写入序号两个字 水平居中 垂直居中
 	   my_cell = word_table.OleFunction("Cell", (Variant)1, (Variant)1);
 	   my_cell.OlePropertySet("Range", "序号");
+	   my_cell.OlePropertyGet("Range").OlePropertyGet("ParagraphFormat").OlePropertySet("Alignment", 1);
+	   my_cell.OlePropertySet("VerticalAlignment", 1);
+
+	   // 第一行 第二列 水平居中  垂直居中
+	   my_cell = word_table.OleFunction("Cell", (Variant)1, (Variant)2);
+	   my_cell.OlePropertyGet("Range").OlePropertyGet("ParagraphFormat").OlePropertySet("Alignment", 1);
+	   my_cell.OlePropertySet("VerticalAlignment", 1);
+
 
 	 for (int j = 1; j < text->Count + 1; j++) {
+		// 第一列数据
 		my_cell = word_table.OleFunction("Cell", (Variant)(j + 1), (Variant)1);
 		my_cell.OlePropertySet("Range", j);
-		my_cell = word_table.OleFunction("Cell", (Variant)(j + 1), (Variant)2);
+		// 水平居中
+		my_cell.OlePropertyGet("Range").OlePropertyGet("ParagraphFormat").OlePropertySet("Alignment", 1);
+		// 垂直居中
+		my_cell.OlePropertySet("VerticalAlignment", 1);
 
+        // 第二列数据
+		my_cell = word_table.OleFunction("Cell", (Variant)(j + 1), (Variant)2);
 		my_cell.OlePropertySet("Range", text->Strings[j-1].t_str());
 	 }
 
@@ -168,13 +205,64 @@ void __fastcall TForm2::clearClick(TObject *Sender)
 
 void __fastcall TForm2::ccChange(TObject *Sender)
 {
-     successTime->Caption = 0 ;// 转换次数改成0
+	 successTime->Caption = 0 ;// 转换次数改成0
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TForm2::helpClick(TObject *Sender)
 {
 	ShowMessage("点击转换按钮，行数变化后可直接粘贴！");
+}
+
+String __fastcall TForm2::trim(String &str) {
+
+//		char val[] = original.ToCharArray(3, 4);    /* avoid getfield opcode */  const AnsiString &mystr
+
+        ShowMessage(str);
+//		AnsiString str = mystr;
+		int len ,count= str.Length();
+		int st = 1;
+		ShowMessage("3353" + str);
+//
+//		while ((st < len) && (str [st] <= ' ')) {
+//			st++;
+//		}
+//		while ((st < len) && (str [len - 1] <= ' ')) {
+//			len--;
+//		}
+//		while ((st < len + 1) && (str [st] != '　')) {
+//			ShowMessage(str[st]);
+//			st++;
+//		}
+//		ShowMessage("next!!");
+//		while ((st < len + 1) && (str[len - 1] != '　')) {
+//			ShowMessage(str[len - 1]);
+//			len--;
+//		}
+
+		while (st <= len) {
+		ShowMessage("35jjjj");
+			if (str[st] == '　') {
+				ShowMessage("35gggg");
+			   str = str.SubString(st, len);
+			}
+			st++;
+        }
+		 return str;
+//		ShowMessage("343" + str.SubString(st, len));
+//		return ((st > 0) || (len < count)) ? str.SubString(st, len) : str;
+	}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm2::Column1Change(TObject *Sender)
+{
+       successTime->Caption = 0 ;// 转换次数改成0
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm2::Column2Change(TObject *Sender)
+{
+	successTime->Caption = 0 ;// 转换次数改成0
 }
 //---------------------------------------------------------------------------
 
