@@ -131,29 +131,44 @@
     TabOrder = 3
     OnClick = helpClick
   end
-  object Column1: TRichEdit
-    Left = 280
-    Top = 16
-    Width = 105
-    Height = 26
-    Font.Charset = GB2312_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    Lines.Strings = (
-      'Column1')
-    ParentFont = False
+  object Column1: TLabeledEdit
+    Left = 303
+    Top = 14
+    Width = 38
+    Height = 20
+    EditLabel.Width = 50
+    EditLabel.Height = 16
+    EditLabel.BiDiMode = bdLeftToRight
+    EditLabel.Caption = #24038#21015#23485':'
+    EditLabel.Font.Charset = DEFAULT_CHARSET
+    EditLabel.Font.Color = clWindowText
+    EditLabel.Font.Height = -13
+    EditLabel.Font.Name = 'Tahoma'
+    EditLabel.Font.Style = []
+    EditLabel.ParentBiDiMode = False
+    EditLabel.ParentFont = False
+    LabelPosition = lpLeft
+    MaxLength = 4
+    NumbersOnly = True
     TabOrder = 4
-    OnChange = Column1Change
   end
-  object Column2: TEdit
-    Left = 424
-    Top = 17
-    Width = 121
-    Height = 21
+  object Column2: TLabeledEdit
+    Left = 415
+    Top = 14
+    Width = 38
+    Height = 20
+    EditLabel.Width = 50
+    EditLabel.Height = 16
+    EditLabel.Caption = #21491#21015#23485':'
+    EditLabel.Font.Charset = DEFAULT_CHARSET
+    EditLabel.Font.Color = clWindowText
+    EditLabel.Font.Height = -13
+    EditLabel.Font.Name = 'Tahoma'
+    EditLabel.Font.Style = []
+    EditLabel.ParentFont = False
+    LabelPosition = lpLeft
+    MaxLength = 4
+    NumbersOnly = True
     TabOrder = 5
-    Text = 'Column2'
-    OnChange = Column2Change
   end
 end

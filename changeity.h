@@ -8,6 +8,7 @@
 #include <StdCtrls.hpp>
 #include <Forms.hpp>
 #include <ComCtrls.hpp>
+#include <ExtCtrls.hpp>
 //---------------------------------------------------------------------------
 class TForm2 : public TForm
 {
@@ -20,8 +21,8 @@ __published:	// IDE-managed Components
 	TLabel *successTime;
 	TButton *clear;
 	TButton *help;
-	TRichEdit *Column1;
-	TEdit *Column2;
+	TLabeledEdit *Column1;
+	TLabeledEdit *Column2;
 	void __fastcall ×ª»»Click(TObject *Sender);
 	void __fastcall clearClick(TObject *Sender);
 	void __fastcall ccChange(TObject *Sender);
