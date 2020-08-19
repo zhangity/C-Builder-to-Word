@@ -26,7 +26,6 @@ __published:	// IDE-managed Components
 	void __fastcall clearClick(TObject *Sender);
 	void __fastcall ccChange(TObject *Sender);
 	void __fastcall helpClick(TObject *Sender);
-	String  __fastcall trim(String &mystr);
 	void __fastcall Column1Change(TObject *Sender);
 	void __fastcall Column2Change(TObject *Sender);
 private:	// User declarations

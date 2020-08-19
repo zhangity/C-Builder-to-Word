@@ -214,44 +214,6 @@ void __fastcall TForm2::helpClick(TObject *Sender)
 	ShowMessage("点击转换按钮，行数变化后可直接粘贴！");
 }
 
-String __fastcall TForm2::trim(String &str) {
-
-//		char val[] = original.ToCharArray(3, 4);    /* avoid getfield opcode */  const AnsiString &mystr
-
-        ShowMessage(str);
-//		AnsiString str = mystr;
-		int len ,count= str.Length();
-		int st = 1;
-		ShowMessage("3353" + str);
-//
-//		while ((st < len) && (str [st] <= ' ')) {
-//			st++;
-//		}
-//		while ((st < len) && (str [len - 1] <= ' ')) {
-//			len--;
-//		}
-//		while ((st < len + 1) && (str [st] != '　')) {
-//			ShowMessage(str[st]);
-//			st++;
-//		}
-//		ShowMessage("next!!");
-//		while ((st < len + 1) && (str[len - 1] != '　')) {
-//			ShowMessage(str[len - 1]);
-//			len--;
-//		}
-
-		while (st <= len) {
-		ShowMessage("35jjjj");
-			if (str[st] == '　') {
-				ShowMessage("35gggg");
-			   str = str.SubString(st, len);
-			}
-			st++;
-        }
-		 return str;
-//		ShowMessage("343" + str.SubString(st, len));
-//		return ((st > 0) || (len < count)) ? str.SubString(st, len) : str;
-	}
 //---------------------------------------------------------------------------
 
 void __fastcall TForm2::Column1Change(TObject *Sender)
