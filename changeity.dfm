@@ -75,7 +75,7 @@
     HelpContext = 2
     Font.Charset = GB2312_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
+    Font.Height = -13
     Font.Name = 'Tahoma'
     Font.Style = []
     HideScrollBars = False
@@ -103,7 +103,7 @@
   end
   object clear: TButton
     Left = 709
-    Top = 224
+    Top = 208
     Width = 113
     Height = 97
     Caption = #28165#31354
@@ -117,14 +117,14 @@
     OnClick = clearClick
   end
   object help: TButton
-    Left = 592
-    Top = 8
-    Width = 89
+    Left = 709
+    Top = 327
+    Width = 113
     Height = 34
     Caption = #20351#29992#24110#21161
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
+    Font.Height = -13
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
@@ -135,7 +135,7 @@
     Left = 303
     Top = 14
     Width = 38
-    Height = 20
+    Height = 21
     EditLabel.Width = 50
     EditLabel.Height = 16
     EditLabel.BiDiMode = bdLeftToRight
@@ -156,7 +156,7 @@
     Left = 415
     Top = 14
     Width = 38
-    Height = 20
+    Height = 21
     EditLabel.Width = 50
     EditLabel.Height = 16
     EditLabel.Caption = #21491#21015#23485':'
@@ -170,5 +170,21 @@
     MaxLength = 4
     NumbersOnly = True
     TabOrder = 5
+  end
+  object CheckBackColor: TCheckBox
+    Left = 709
+    Top = 8
+    Width = 113
+    Height = 38
+    Caption = #39318#34892#21015#32972#26223#33394
+    Checked = True
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    State = cbChecked
+    TabOrder = 6
   end
 end

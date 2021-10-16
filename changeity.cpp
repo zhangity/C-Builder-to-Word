@@ -19,6 +19,7 @@ __fastcall TForm2::TForm2(TComponent* Owner)
 {
 Column1->Text = 37.7;
 Column2->Text =  461;
+
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm2::转换Click(TObject *Sender)
@@ -127,6 +128,9 @@ void __fastcall TForm2::转换Click(TObject *Sender)
 	//String str1 = "要插入的第一段文字\r\n换一个行先";
 	//vSelect.OleProcedure("TypeText", WideString(str1));
 	//vSelect.OleProcedure("TypeParagraph");
+	// RGB 颜色 bigdecimal 值
+	long shenseColor = 15057564;
+	long qianseColor = 16181982;
 
 	// 插入一个表格
 	int nRowCount = text->Count + 1; // 行
@@ -150,11 +154,19 @@ void __fastcall TForm2::转换Click(TObject *Sender)
 	   my_cell.OlePropertySet("Range", "序号");
 	   my_cell.OlePropertyGet("Range").OlePropertyGet("ParagraphFormat").OlePropertySet("Alignment", 1);
 	   my_cell.OlePropertySet("VerticalAlignment", 1);
+	   // 表格添加背景色 2021年10月16日
+	   if (CheckBackColor->Checked) {
+		  my_cell.OlePropertyGet("Shading").OlePropertySet("BackgroundPatternColor", shenseColor);
+	   }
 
 	   // 第一行 第二列 水平居中  垂直居中
 	   my_cell = word_table.OleFunction("Cell", (Variant)1, (Variant)2);
 	   my_cell.OlePropertyGet("Range").OlePropertyGet("ParagraphFormat").OlePropertySet("Alignment", 1);
 	   my_cell.OlePropertySet("VerticalAlignment", 1);
+	   // 表格添加背景色 2021年10月16日
+	   if (CheckBackColor->Checked){
+		   my_cell.OlePropertyGet("Shading").OlePropertySet("BackgroundPatternColor", shenseColor);
+	   }
 
 
 	 for (int j = 1; j < text->Count + 1; j++) {
@@ -165,10 +177,18 @@ void __fastcall TForm2::转换Click(TObject *Sender)
 		my_cell.OlePropertyGet("Range").OlePropertyGet("ParagraphFormat").OlePropertySet("Alignment", 1);
 		// 垂直居中
 		my_cell.OlePropertySet("VerticalAlignment", 1);
+		// 表格添加背景色 2021年10月16日
+		if (CheckBackColor->Checked) {
+			 my_cell.OlePropertyGet("Shading").OlePropertySet("BackgroundPatternColor", qianseColor);
+		}
 
         // 第二列数据
 		my_cell = word_table.OleFunction("Cell", (Variant)(j + 1), (Variant)2);
 		my_cell.OlePropertySet("Range", text->Strings[j-1].t_str());
+
+		// 给表格添加颜色 2021年10月16日
+//	   long colorRGB =R +  G * 256 + B * 65536  ;   // RGB 转 bigdecimal
+
 	 }
 
 	// 将光标移到文档结尾
@@ -211,7 +231,7 @@ void __fastcall TForm2::ccChange(TObject *Sender)
 
 void __fastcall TForm2::helpClick(TObject *Sender)
 {
-	ShowMessage("点击转换按钮，行数变化后可直接粘贴！");
+	ShowMessage("点击转换按钮后，表格已经复制到剪切板，直接粘贴即可！\r\n\r\n版本 v1.2 版权所有-吕天伊 2021年10月16日 ");
 }
 
 //---------------------------------------------------------------------------

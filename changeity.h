@@ -23,6 +23,7 @@ __published:	// IDE-managed Components
 	TButton *help;
 	TLabeledEdit *Column1;
 	TLabeledEdit *Column2;
+	TCheckBox *CheckBackColor;
 	void __fastcall ×ª»»Click(TObject *Sender);
 	void __fastcall clearClick(TObject *Sender);
 	void __fastcall ccChange(TObject *Sender);
